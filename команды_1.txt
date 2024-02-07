@@ -1,0 +1,117 @@
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ cat > home_animals
+cat1   
+cat2
+dog1
+dog2
+hamster1
+hanster2
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ cat > pack_animals
+horse1
+horse2
+camel1
+camel2
+donkey1
+donkey2
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ cat home_animals pack_animals > animals
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ cat animals
+cat1
+cat2
+dog1
+dog2
+hamster1
+hanster2
+horse1
+horse2
+camel1
+camel2
+donkey1
+donkey2
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ mv animals mans_friends
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ mkdir animals
+buntu@ubuntu-VirtualBox:~/Itogovaya$ sudo mv mans_friends animals
+
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ sudo wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
+ ubuntu@ubuntu-VirtualBox:~/Itogovaya$ sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$  sudo apt-get update
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ sudo apt install mysql-workbench-community
+ ubuntu@ubuntu-VirtualBox:~/Itogovaya$ sudo dpkg -i google-chrome-stable_current_amd64.deb
+ubuntu@ubuntu-VirtualBox:~/Itogovaya$ sudo dpkg -r google-chrome-stable
+
+
+
+
+
+
+
+
+
+mysql>   CREATE TABLE home_animals (id_speices SERIAL, species VARCHAR(30));
+ mysql>   INSERT  home_animals SET `species` = "cats";
+Query OK, 1 row affected (0,04 sec)
+mysql>   INSERT  home_animals SET `species` = "dogs";
+Query OK, 1 row affected (0,02 sec)
+mysql>   INSERT  home_animals SET `species` = "hamstels";
+Query OK, 1 row affected (0,04 sec)
+mysql>   CREATE TABLE pack_animals (id_speices SERIAL, species VARCHAR(30));
+Query OK, 0 rows affected (0,03 sec)
+mysql>   INSERT  pack_animals SET `species` = "horses";
+Query OK, 1 row affected (0,05 sec)
+mysql>   INSERT  pack_animals SET `species` = "camels";
+Query OK, 1 row affected (0,01 sec)
+mysql>   INSERT  pack_animals SET `species` = "donkeys";
+Query OK, 1 row affected (0,04 sec)
+ mysql>   ALTER TABLE home_animals MODIFY COLUMN id_speices INT AUTO_INCREMENT PRIMARY KEY;
+Query OK, 3 rows affected (0,09 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql>   CREATE TABLE cats (id SERIAL, name VARCHAR(30), commands VARCHAR(50), birthday DATE, id_speices  INT, FOREIGN KEY (id_speices) REFERENCES home_animals(id_speices));
+Query OK, 0 rows affected (0,04 sec)
+mysql>   ALTER TABLE pack_animals MODIFY COLUMN id_speices INT AUTO_INCREMENT PRIMARY KEY;
+Query OK, 3 rows affected (0,10 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql>   CREATE TABLE dogs (id SERIAL, name VARCHAR(30), commands VARCHAR(50), birthday DATE, id_speices  INT, FOREIGN KEY (id_speices) REFERENCES home_animals(id_speices));
+Query OK, 0 rows affected (0,03 sec)
+mysql>   CREATE TABLE hamstels (id SERIAL, name VARCHAR(30), commands VARCHAR(50),
+ birthday DATE, id_speices  INT, FOREIGN KEY (id_speices) REFERENCES home_animals(id_speices));
+Query OK, 0 rows affected (0,07 sec)
+mysql>   CREATE TABLE horses (id SERIAL, name VARCHAR(30), commands VARCHAR(50), birthday DATE, id_speices  INT, FOREIGN KEY (id_speices) REFERENCES pack_animals(id_speices));
+Query OK, 0 rows affected (0,04 sec)
+mysql>   CREATE TABLE camels (id SERIAL, name VARCHAR(30), commands VARCHAR(50), birthday DATE, id_speices  INT, FOREIGN KEY (id_speices) REFERENCES pack_animals(id_speices));
+Query OK, 0 rows affected (0,04 sec)
+mysql>   CREATE TABLE donkeys (id SERIAL, name VARCHAR(30), commands VARCHAR(50),
+birthday DATE, id_speices  INT, FOREIGN KEY (id_speices) REFERENCES pack_animals(id_speices));
+Query OK, 0 rows affected (0,06 sec)
+mysql>    INSERT INTO horses (name,commands,birthday,id_speices) VALUES ('anny','run,jump,sit,swim','2003-09-01','1'), ('tilla','run,swim','2014-05-30','1'), ('dolly','run,sit,kick','2009-04-22','1');
+Query OK, 3 rows affected (0,03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql>    INSERT INTO camels (name,commands,birthday,id_speices) VALUES ('bill','run,spit','2013-05-01','2'), ('ali','spit','2019-09-30','2'), ('abdulla','run,spit','2018-03-03','2');
+Query OK, 3 rows affected (0,02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql>    INSERT INTO donkeys (name,commands,birthday,id_speices) VALUES ('key','run','2015-05-13','3'), ('alek','drag','2020-04-30','3'), ('jon','run','2018-05-03','3');
+Query OK, 3 rows affected (0,01 sec)
+ mysql>   DROP TABLE camels;
+Query OK, 0 rows affected (0,05 sec)
+ mysql>  INSERT INTO young_animals (name, commands, birthday, id_speices)  SELECT name, commands, birthday, id_speices FROM hamstels WHERE 1<=(YEAR(CURRENT_DATE)-YEAR(birthday))<=3 AND (YEAR(CURRE
+Query OK, 2 rows affected (0,04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+mysql>  INSERT INTO young_animals (name, commands, birthday, id_speices)  SELECT name, commands, birthday, id_speices FROM dogs WHERE 1<=(YEAR(CURRENT_DATE)-YEAR(birthday))<=3 AND (YEAR(CURRENT_DATE)-YEAR(birthday))<=3;
+Query OK, 1 row affected (0,01 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+mysql>  INSERT INTO young_animals (name, commands, birthday, id_speices)  SELECT name, commands, birthday, id_speices FROM cats WHERE 1<=(YEAR(CURRENT_DATE)-YEAR(birthday))<=3 AND (YEAR(CURRENT_DATE)-YEAR(birthday))<=3;
+Query OK, 1 row affected (0,05 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+mysql>  INSERT INTO young_animals (name, commands, birthday, id_speices)  SELECT name, commands, birthday, id_speices FROM horses WHERE 1<=(YEAR(CURRENT_DATE)-YEAR(birthday))<=3 AND (YEAR(CURRENT_DATE)-YEAR(birthday))<=3;
+Query OK, 0 rows affected (0,00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql>  INSERT INTO young_animals (name, commands, birthday, id_speices)  SELECT name, commands, birthday, id_speices FROM donkeys WHERE 1<=(YEAR(CURRENT_DATE)-YEAR(birthday))<=3 AN
+D (YEAR(CURRENT_DATE)-YEAR(birthday))<=3;
+Query OK, 2 rows affected (0,04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+mysql>  CREATE TABLE all_animal (id SERIAL, id_last INT, name VARCHAR(30), commands VARCHAR(50), birthday DATE, id_speices  INT);
+Query OK, 0 rows affected (0,04 sec)
+mysql>  INSERT INTO all_animal (id_last, name, commands, birthday, id_speices) SELECT * FROM cats UNION ALL SELECT * FROM dogs;
+Query OK, 6 rows affected (0,02 sec)
+Records: 6  Duplicates: 0  Warnings: 0 
+mysql>  INSERT INTO all_animal (id_last, name, commands, birthday, id_speices) SELECT * FROM hamstels UNION ALL SELECT * FROM horses UNION ALL SELECT * FROM donkeys;
+Query OK, 12 rows affected (0,00 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
